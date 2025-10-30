@@ -1,0 +1,30 @@
+<div class="mb-3">
+    <label for="deviceSelect" class="form-label">Select Device</label>
+    <select class="form-select" id="deviceSelect" @onchange="OnDeviceSelectionChanged">
+        <option value="">All Devices</option>
+        @if (DeviceIds != null)
+        {
+            @foreach (var deviceId in DeviceIds)
+            {
+                <option value="@deviceId" selected="@(SelectedDevice == deviceId)">@deviceId</option>
+            }
+        }
+    </select>
+</div>
+
+@code {
+    [Parameter]
+    public List<string>? DeviceIds { get; set; }
+
+    [Parameter]
+    public string? SelectedDevice { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnDeviceSelected { get; set; }
+
+    private async Task OnDeviceSelectionChanged(ChangeEventArgs e)
+    {
+        var selectedValue = e.Value?.ToString() ?? "";
+        await OnDeviceSelected.InvokeAsync(selectedValue);
+    }
+}

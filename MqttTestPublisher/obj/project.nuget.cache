@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "dgSpecHash": "aHtz6fphsn8=",
+  "success": true,
+  "projectFilePath": "D:\\IOT AI Project\\MqttTestPublisher\\TestMqttPublisher.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\User\\.nuget\\packages\\mqttnet\\4.3.0.858\\mqttnet.4.3.0.858.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.app.ref\\8.0.20\\microsoft.netcore.app.ref.8.0.20.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\8.0.20\\microsoft.windowsdesktop.app.ref.8.0.20.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\8.0.20\\microsoft.aspnetcore.app.ref.8.0.20.nupkg.sha512",
+    "C:\\Users\\User\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\8.0.20\\microsoft.netcore.app.host.win-x64.8.0.20.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "message": "TestMqttPublisher depends on MQTTnet (>= 4.3.0) but MQTTnet 4.3.0 was not found. MQTTnet 4.3.0.858 was resolved instead.",
+      "projectPath": "D:\\IOT AI Project\\MqttTestPublisher\\TestMqttPublisher.csproj",
+      "warningLevel": 1,
+      "filePath": "D:\\IOT AI Project\\MqttTestPublisher\\TestMqttPublisher.csproj",
+      "libraryId": "MQTTnet",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
+}

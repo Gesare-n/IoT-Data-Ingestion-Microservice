@@ -1,0 +1,5 @@
+D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\TestMqttPublisher.csproj.AssemblyReference.cache
+D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\TestMqttPublisher.GeneratedMSBuildEditorConfig.editorconfig
+D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\TestMqttPublisher.AssemblyInfoInputs.cache
+D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\TestMqttPublisher.AssemblyInfo.cs
+D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\TestMqttPublisher.csproj.CoreCompileInputs.cache

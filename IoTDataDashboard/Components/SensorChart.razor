@@ -1,0 +1,118 @@
+@using IoTDataDashboard.Models
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-header">
+        <h5 class="mb-0">@Title</h5>
+    </div>
+    <div class="card-body">
+        <canvas width="400" height="200" @ref="chartCanvas"></canvas>
+        @if (hasJsError)
+        {
+            <div class="alert alert-warning mt-2">
+                <small>Unable to render chart. Data will be displayed in the table below.</small>
+            </div>
+        }
+    </div>
+</div>
+
+@code {
+    private ElementReference chartCanvas;
+    private bool hasJsError = false;
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public List<SensorReading>? Readings { get; set; }
+
+    [Parameter]
+    public ChartType Type { get; set; } = ChartType.Line;
+
+    [Parameter]
+    public double? GaugeValue { get; set; }
+
+    [Parameter]
+    public double? GaugeMin { get; set; }
+
+    [Parameter]
+    public double? GaugeMax { get; set; }
+
+    [Parameter]
+    public string? GaugeLabel { get; set; }
+
+    [Parameter]
+    public string? GaugeUnit { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        try
+        {
+            if (Type == ChartType.Gauge && GaugeValue.HasValue)
+            {
+                var chartData = new
+                {
+                    type = "gauge",
+                    value = GaugeValue.Value,
+                    min = GaugeMin ?? 0,
+                    max = GaugeMax ?? 100,
+                    label = GaugeLabel ?? "",
+                    unit = GaugeUnit ?? ""
+                };
+
+                await JSRuntime.InvokeVoidAsync("drawChart", chartCanvas, chartData);
+            }
+            else if (Readings != null && Readings.Any())
+            {
+                var labels = Readings.Select(r => r.Timestamp.ToString("HH:mm")).ToList();
+                var data = Type == ChartType.Line || Type == ChartType.Bar
+                    ? (Type == ChartType.Line 
+                        ? Readings.Select(r => r.Temperature).ToList()
+                        : Readings.Select(r => r.Humidity).ToList())
+                    : new List<double>();
+
+                var chartType = Type == ChartType.Line ? "line" : "bar";
+                var label = Type == ChartType.Line ? "Temperature (°C)" : "Humidity (%)";
+                var borderColor = Type == ChartType.Line ? "#ff6b35" : "#00d9ff";
+                var backgroundColor = Type == ChartType.Line 
+                    ? "rgba(255, 107, 53, 0.1)" 
+                    : "rgba(0, 217, 255, 0.5)";
+
+                var chartData = new
+                {
+                    type = chartType,
+                    labels = labels,
+                    datasets = new[]
+                    {
+                        new
+                        {
+                            label = label,
+                            data = data,
+                            borderColor = borderColor,
+                            backgroundColor = backgroundColor,
+                            borderWidth = 2,
+                            fill = Type == ChartType.Line,
+                            tension = Type == ChartType.Line ? 0.4 : 0
+                        }
+                    }
+                };
+
+                await JSRuntime.InvokeVoidAsync("drawChart", chartCanvas, chartData);
+            }
+            hasJsError = false;
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error drawing chart: {ex.Message}");
+            hasJsError = true;
+        }
+    }
+
+    public enum ChartType
+    {
+        Line,
+        Bar,
+        Gauge
+    }
+}

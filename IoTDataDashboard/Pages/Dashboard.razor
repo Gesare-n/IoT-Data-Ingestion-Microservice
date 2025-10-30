@@ -1,0 +1,208 @@
+@page "/dashboard"
+@using IoTDataDashboard.Components
+@using IoTDataDashboard.Models
+@using IoTDataDashboard.Services
+@inject SensorDataService SensorDataService
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4">IoT Sensor Dashboard</h1>
+            <p class="text-muted">Real-time monitoring of sensor data</p>
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Loading sensor data...</p>
+            </div>
+        </div>
+    }
+    else if (hasError)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Connection Error</h4>
+                    <p>Unable to fetch sensor data. Please check your connection and try again.</p>
+                    <button type="button" class="btn btn-primary" @onclick="LoadData">Retry</button>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mb-4">
+            <div class="col-12">
+                <DeviceSelector DeviceIds="@deviceIds" SelectedDevice="@selectedDevice" OnDeviceSelected="OnDeviceSelected" />
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-3 col-sm-6">
+                <StatisticsCard Title="Latest Temperature" Value="@(latestReading != null ? $"{latestReading.Temperature:F1}°C" : "N/A")" 
+                                Subtitle="@(latestReading != null ? $"Device: {latestReading.DeviceId}" : "")" />
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <StatisticsCard Title="Latest Humidity" Value="@(latestReading != null ? $"{latestReading.Humidity:F1}%" : "N/A")" 
+                                Subtitle="@(latestReading != null ? $"Device: {latestReading.DeviceId}" : "")" />
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <StatisticsCard Title="Last Update" Value="@(latestReading != null ? FormatTimestamp(latestReading.Timestamp) : "Never")" 
+                                Subtitle="@(latestReading != null ? latestReading.Timestamp.ToString("MMM dd, yyyy HH:mm:ss") : "")" />
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <StatisticsCard Title="Total Readings" Value="@readings.Count.ToString()" Subtitle="in database" />
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3>Trends</h3>
+                    <button class="btn btn-outline-primary" @onclick="LoadData">
+                        <i class="fas fa-sync-alt"></i> Refresh Now
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <SensorChart Title="Temperature Trend" Readings="@readings" Type="SensorChart.ChartType.Line" />
+            </div>
+            <div class="col-md-6">
+                <SensorChart Title="Humidity Trend" Readings="@readings" Type="SensorChart.ChartType.Line" />
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3>Gauges</h3>
+            </div>
+            <div class="col-md-6">
+                <SensorChart Title="Current Temperature" 
+                             GaugeValue="@(latestReading?.Temperature)" 
+                             GaugeMin="0" 
+                             GaugeMax="50" 
+                             GaugeLabel="Temperature" 
+                             GaugeUnit="°C" 
+                             Type="SensorChart.ChartType.Gauge" />
+            </div>
+            <div class="col-md-6">
+                <SensorChart Title="Current Humidity" 
+                             GaugeValue="@(latestReading?.Humidity)" 
+                             GaugeMin="0" 
+                             GaugeMax="100" 
+                             GaugeLabel="Humidity" 
+                             GaugeUnit="%" 
+                             Type="SensorChart.ChartType.Gauge" />
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <h3>Historical Data</h3>
+            </div>
+            <div class="col-md-6">
+                <SensorChart Title="Temperature History" Readings="@readings" Type="SensorChart.ChartType.Bar" />
+            </div>
+            <div class="col-md-6">
+                <SensorChart Title="Humidity History" Readings="@readings" Type="SensorChart.ChartType.Bar" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <h3>Recent Readings</h3>
+                <SensorReadingsTable Readings="@readings" />
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private List<SensorReading> readings = new();
+    private List<string> deviceIds = new();
+    private SensorReading? latestReading;
+    private string selectedDevice = "";
+    private bool isLoading = true;
+    private bool hasError = false;
+    private Timer? timer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+        
+        // Set up auto-refresh every 10 seconds
+        timer = new Timer(async _ => await InvokeAsync(async () =>
+        {
+            await LoadData();
+            StateHasChanged();
+        }), null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10));
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            isLoading = true;
+            hasError = false;
+            StateHasChanged();
+
+            // Load readings based on selected device
+            if (string.IsNullOrEmpty(selectedDevice))
+            {
+                readings = await SensorDataService.GetLatestReadingsAsync();
+            }
+            else
+            {
+                readings = await SensorDataService.GetReadingsByDeviceAsync(selectedDevice);
+            }
+
+            latestReading = readings.FirstOrDefault();
+            
+            // Load device IDs
+            deviceIds = await SensorDataService.GetDeviceIdsAsync();
+        }
+        catch (Exception ex)
+        {
+            hasError = true;
+            Console.Error.WriteLine($"Error loading data: {ex.Message}");
+            Console.Error.WriteLine($"Stack trace: {ex.StackTrace}");
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task OnDeviceSelected(string deviceId)
+    {
+        selectedDevice = deviceId;
+        await LoadData();
+    }
+
+    private string FormatTimestamp(DateTimeOffset timestamp)
+    {
+        var now = DateTimeOffset.Now;
+        var diff = now - timestamp;
+
+        if (diff.TotalMinutes < 1)
+            return "Just now";
+        if (diff.TotalMinutes < 60)
+            return $"{(int)diff.TotalMinutes} minutes ago";
+        if (diff.TotalHours < 24)
+            return $"{(int)diff.TotalHours} hours ago";
+        
+        return timestamp.ToString("MMM dd, yyyy HH:mm");
+    }
+
+    public void Dispose()
+    {
+        timer?.Dispose();
+    }
+}

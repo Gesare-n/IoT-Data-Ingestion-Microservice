@@ -1,0 +1,122 @@
+@page "/historical"
+@using IoTDataDashboard.Components
+@using IoTDataDashboard.Models
+@using IoTDataDashboard.Services
+@inject SensorDataService SensorDataService
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4">Historical Data</h1>
+            <p class="text-muted">View historical sensor readings over time</p>
+        </div>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="row">
+            <div class="col-12 text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p>Loading historical data...</p>
+            </div>
+        </div>
+    }
+    else if (hasError)
+    {
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-danger" role="alert">
+                    <h4 class="alert-heading">Connection Error</h4>
+                    <p>Unable to fetch historical data. Please check your connection and try again.</p>
+                    <button type="button" class="btn btn-primary" @onclick="LoadData">Retry</button>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row mb-4">
+            <div class="col-12">
+                <DateRangeSelector @bind-StartDate="startDate" @bind-EndDate="endDate" OnDateRangeSelected="LoadData" />
+            </div>
+        </div>
+
+        @if (readings.Any())
+        {
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <SensorChart Title="Temperature History" Readings="@readings" Type="SensorChart.ChartType.Line" />
+                </div>
+                <div class="col-md-6">
+                    <SensorChart Title="Humidity History" Readings="@readings" Type="SensorChart.ChartType.Line" />
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <SensorChart Title="Temperature Distribution" Readings="@readings" Type="SensorChart.ChartType.Bar" />
+                </div>
+                <div class="col-md-6">
+                    <SensorChart Title="Humidity Distribution" Readings="@readings" Type="SensorChart.ChartType.Bar" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <h3>Historical Readings</h3>
+                    <SensorReadingsTable Readings="@readings" />
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">No Data Found</h4>
+                        <p>No sensor readings found for the selected date range.</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private List<SensorReading> readings = new();
+    private DateTime startDate = DateTime.Today.AddDays(-7);
+    private DateTime endDate = DateTime.Today;
+    private bool isLoading = true;
+    private bool hasError = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        try
+        {
+            isLoading = true;
+            hasError = false;
+            StateHasChanged();
+
+            // For now, we'll use the same data as the main dashboard
+            // In a real implementation, you would call a date range API endpoint
+            readings = await SensorDataService.GetLatestReadingsAsync();
+        }
+        catch (Exception ex)
+        {
+            hasError = true;
+            Console.Error.WriteLine($"Error loading historical data: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+}

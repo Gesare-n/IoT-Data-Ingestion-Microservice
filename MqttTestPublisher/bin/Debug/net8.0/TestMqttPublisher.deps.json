@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "TestMqttPublisher/1.0.0": {
+        "dependencies": {
+          "MQTTnet": "4.3.0.858"
+        },
+        "runtime": {
+          "TestMqttPublisher.dll": {}
+        }
+      },
+      "MQTTnet/4.3.0.858": {
+        "runtime": {
+          "lib/net7.0/MQTTnet.dll": {
+            "assemblyVersion": "4.3.0.858",
+            "fileVersion": "4.3.0.858"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TestMqttPublisher/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MQTTnet/4.3.0.858": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0ApufhJuJTfxSXt8plY07nYUug3L5V6KAt5NITPUKq7hMklSoBl52T4PiA2jvqDLVD0pdYGhdm2E0F5zN5K9FQ==",
+      "path": "mqttnet/4.3.0.858",
+      "hashPath": "mqttnet.4.3.0.858.nupkg.sha512"
+    }
+  }
+}
