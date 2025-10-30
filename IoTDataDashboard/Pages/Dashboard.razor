@@ -38,12 +38,6 @@
     else
     {
         <div class="row mb-4">
-            <div class="col-12">
-                <DeviceSelector DeviceIds="@deviceIds" SelectedDevice="@selectedDevice" OnDeviceSelected="OnDeviceSelected" />
-            </div>
-        </div>
-
-        <div class="row mb-4">
             <div class="col-md-3 col-sm-6">
                 <StatisticsCard Title="Latest Temperature" Value="@(latestReading != null ? $"{latestReading.Temperature:F1}°C" : "N/A")" 
                                 Subtitle="@(latestReading != null ? $"Device: {latestReading.DeviceId}" : "")" />
@@ -64,7 +58,7 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h3>Trends</h3>
+                    <h3>Real-time Trends</h3>
                     <button class="btn btn-outline-primary" @onclick="LoadData">
                         <i class="fas fa-sync-alt"></i> Refresh Now
                     </button>
@@ -80,7 +74,7 @@
 
         <div class="row mb-4">
             <div class="col-12">
-                <h3>Gauges</h3>
+                <h3>Current Status</h3>
             </div>
             <div class="col-md-6">
                 <SensorChart Title="Current Temperature" 
@@ -102,18 +96,6 @@
             </div>
         </div>
 
-        <div class="row mb-4">
-            <div class="col-12">
-                <h3>Historical Data</h3>
-            </div>
-            <div class="col-md-6">
-                <SensorChart Title="Temperature History" Readings="@readings" Type="SensorChart.ChartType.Bar" />
-            </div>
-            <div class="col-md-6">
-                <SensorChart Title="Humidity History" Readings="@readings" Type="SensorChart.ChartType.Bar" />
-            </div>
-        </div>
-
         <div class="row">
             <div class="col-12">
                 <h3>Recent Readings</h3>
@@ -125,9 +107,7 @@
 
 @code {
     private List<SensorReading> readings = new();
-    private List<string> deviceIds = new();
     private SensorReading? latestReading;
-    private string selectedDevice = "";
     private bool isLoading = true;
     private bool hasError = false;
     private Timer? timer;
@@ -152,20 +132,8 @@
             hasError = false;
             StateHasChanged();
 
-            // Load readings based on selected device
-            if (string.IsNullOrEmpty(selectedDevice))
-            {
-                readings = await SensorDataService.GetLatestReadingsAsync();
-            }
-            else
-            {
-                readings = await SensorDataService.GetReadingsByDeviceAsync(selectedDevice);
-            }
-
+            readings = await SensorDataService.GetLatestReadingsAsync();
             latestReading = readings.FirstOrDefault();
-            
-            // Load device IDs
-            deviceIds = await SensorDataService.GetDeviceIdsAsync();
         }
         catch (Exception ex)
         {
@@ -178,12 +146,6 @@
             isLoading = false;
             StateHasChanged();
         }
-    }
-
-    private async Task OnDeviceSelected(string deviceId)
-    {
-        selectedDevice = deviceId;
-        await LoadData();
     }
 
     private string FormatTimestamp(DateTimeOffset timestamp)

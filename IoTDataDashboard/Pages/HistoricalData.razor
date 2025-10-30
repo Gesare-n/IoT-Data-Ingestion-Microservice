@@ -37,12 +37,6 @@
     }
     else
     {
-        <div class="row mb-4">
-            <div class="col-12">
-                <DateRangeSelector @bind-StartDate="startDate" @bind-EndDate="endDate" OnDateRangeSelected="LoadData" />
-            </div>
-        </div>
-
         @if (readings.Any())
         {
             <div class="row mb-4">
@@ -51,15 +45,6 @@
                 </div>
                 <div class="col-md-6">
                     <SensorChart Title="Humidity History" Readings="@readings" Type="SensorChart.ChartType.Line" />
-                </div>
-            </div>
-
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <SensorChart Title="Temperature Distribution" Readings="@readings" Type="SensorChart.ChartType.Bar" />
-                </div>
-                <div class="col-md-6">
-                    <SensorChart Title="Humidity Distribution" Readings="@readings" Type="SensorChart.ChartType.Bar" />
                 </div>
             </div>
 
@@ -76,7 +61,7 @@
                 <div class="col-12">
                     <div class="alert alert-info" role="alert">
                         <h4 class="alert-heading">No Data Found</h4>
-                        <p>No sensor readings found for the selected date range.</p>
+                        <p>No sensor readings available.</p>
                     </div>
                 </div>
             </div>
@@ -86,8 +71,6 @@
 
 @code {
     private List<SensorReading> readings = new();
-    private DateTime startDate = DateTime.Today.AddDays(-7);
-    private DateTime endDate = DateTime.Today;
     private bool isLoading = true;
     private bool hasError = false;
 
@@ -104,8 +87,6 @@
             hasError = false;
             StateHasChanged();
 
-            // For now, we'll use the same data as the main dashboard
-            // In a real implementation, you would call a date range API endpoint
             readings = await SensorDataService.GetLatestReadingsAsync();
         }
         catch (Exception ex)

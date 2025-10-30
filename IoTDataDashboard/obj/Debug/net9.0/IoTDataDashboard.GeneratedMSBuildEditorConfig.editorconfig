@@ -28,10 +28,6 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/IOT AI Project/IoTDataDashboard/Components/DateRangeSelector.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEYXRlUmFuZ2VTZWxlY3Rvci5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/IOT AI Project/IoTDataDashboard/Components/DeviceSelector.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xEZXZpY2VTZWxlY3Rvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -48,10 +44,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTdGF0aXN0aWNzQ2FyZC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/IOT AI Project/IoTDataDashboard/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [D:/IOT AI Project/IoTDataDashboard/Pages/Dashboard.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -62,10 +54,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/IOT AI Project/IoTDataDashboard/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/IOT AI Project/IoTDataDashboard/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/IOT AI Project/IoTDataDashboard/_Imports.razor]

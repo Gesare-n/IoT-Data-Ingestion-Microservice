@@ -15,3 +15,4 @@ D:\IOT AI Project\MqttTestPublisher\obj\Debug\net8.0\refint\TestMqttPublisher.dl
 D:\IOT AI Project\MqttTestPublisher\obj\Debug\net8.0\TestMqttPublisher.pdb
 D:\IOT AI Project\MqttTestPublisher\obj\Debug\net8.0\TestMqttPublisher.genruntimeconfig.cache
 D:\IOT AI Project\MqttTestPublisher\obj\Debug\net8.0\ref\TestMqttPublisher.dll
+D:\IOT AI Project\MqttTestPublisher\obj\Debug\net8.0\TestMqttPublisher.sourcelink.json

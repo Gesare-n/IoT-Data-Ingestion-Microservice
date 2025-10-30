@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "IoTDataDashboard",
   "resources": {
-    "hash": "sha256-73NlBT2WNPK/58Je14OX3DfDUAB0Mty4wiAyftXD/z8=",
+    "hash": "sha256-kYhuvkQE0TPCjQL3orTyVXjcsH9Upt+A+FPpda16Fa8=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Authorization.z6jo10m0rd.wasm": "Microsoft.AspNetCore.Authorization.wasm",
       "Microsoft.AspNetCore.Components.65wbz7t8mt.wasm": "Microsoft.AspNetCore.Components.wasm",
@@ -201,8 +201,8 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "IoTDataDashboard.3kyf34ug7e.wasm": "IoTDataDashboard.wasm",
-      "IoTDataDashboard.axrumcfk80.pdb": "IoTDataDashboard.pdb"
+      "IoTDataDashboard.dughprlwh5.wasm": "IoTDataDashboard.wasm",
+      "IoTDataDashboard.ml8h57lklu.pdb": "IoTDataDashboard.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.9ih887ebfz.js": "sha256-oS7IRiQoVt9ThQ7Y2UM3XoeY0JqPD02cg9IvRdufn2w="
@@ -412,10 +412,10 @@
       "WindowsBase.vy2l5u79y6.wasm": "sha256-ufB9Mo5joMyUs3DzXWWBFFIZNEVrt6h9N5stYB6Oln4=",
       "mscorlib.xd6mv31d55.wasm": "sha256-1YSLR2eZt3ceALFV//vZUF2AloxVil3VlrW1zZYPSEI=",
       "netstandard.kaml52uspo.wasm": "sha256-HLEwBpLfzKw2/zGSVzHzFJxznCkt/WIjahrziiMrOpA=",
-      "IoTDataDashboard.3kyf34ug7e.wasm": "sha256-s6/poaw6s9oa+tmeZWDcP/a5uJG6HpDK61Fa6z66nvY="
+      "IoTDataDashboard.dughprlwh5.wasm": "sha256-hcSl3QascSAH6ellkQGtNz1o+AMBLQSweGwfW84/GNo="
     },
     "pdb": {
-      "IoTDataDashboard.axrumcfk80.pdb": "sha256-3l4wEWGCPyplHCkOd70rd5430+oJiBecWlJSFvk1mi8="
+      "IoTDataDashboard.ml8h57lklu.pdb": "sha256-NslCHAg0S87GxrnM/WUtI7d15Z7tam9NlaBOmhEsbyY="
     }
   },
   "cacheBootResources": true,

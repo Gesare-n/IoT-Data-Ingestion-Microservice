@@ -57,3 +57,4 @@ D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\refint\IoTDataIngestion.dll
 D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\IoTDataIngestion.pdb
 D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\IoTDataIngestion.genruntimeconfig.cache
 D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\ref\IoTDataIngestion.dll
+D:\IOT AI Project\IoTDataIngestion\obj\Debug\net8.0\IoTDataIngestion.sourcelink.json

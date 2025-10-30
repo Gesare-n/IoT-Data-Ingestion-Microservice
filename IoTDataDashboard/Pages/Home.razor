@@ -1,7 +1,29 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>IoT Sensor Dashboard</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<div class="text-center">
+    <h1 class="display-4">IoT Sensor Dashboard</h1>
+    <p class="lead">Real-time monitoring of sensor data from IoT devices</p>
+    
+    <div class="row mt-5">
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Get Started</h5>
+                    <p class="card-text">Navigate to the Dashboard to view real-time sensor data or Historical Data to see trends over time.</p>
+                    <a href="dashboard" class="btn btn-primary">Go to Dashboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="alert alert-info" role="alert">
+                <h5 class="alert-heading">System Status</h5>
+                <p>Connected to MQTT broker and receiving real-time sensor data.</p>
+            </div>
+        </div>
+    </div>
+</div>

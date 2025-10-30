@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IoTDataDashboard")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e19b62d5ea39eb699b9cab67e091bad14c270388")]
 [assembly: System.Reflection.AssemblyProductAttribute("IoTDataDashboard")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IoTDataDashboard")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
